@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Clock</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #282c34;
+      color: white;
+      font-family: Arial, sans-serif;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .clock-container {
+      text-align: center;
+      background: black;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px white;
+    }
+
+    #time {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    #date {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1.5rem;
+      color: #ffeb3b;
+    }
+  </style>
+</head>
+<body>
+  <div class="clock-container">
+    <div id="time"></div>
+    <div id="date"></div>
+  </div>
+
+  <script>
+    function updateClock() {
+      let now = new Date();
+      
+
+      // Get time
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let seconds = now.getSeconds();
+
+      // backgraund 
+      if(hours>= 6 && hours <10){
+        document.body.style.backgroundImage = "url('morning.jpg')";
+      }
+      if(hours>=10 && hours <14){
+        document.body.style.backgroundImage = "url(day.jpg)";
+      }
+      if(hours>=14 && hours <18){
+        document.body.style.backgroundImage = "url('evvening2.jpg')";
+      }
+      if(hours>=18 && hours <22){
+        document.body.style.backgroundImage = "url('sham.jpg')";
+      }
+      if(hours>=22 && hours <=24){
+        document.body.style.backgroundImage = "url('night.jpg')";
+      }
+      if(hours>=0 && hours <6){
+        document.body.style.backgroundImage = "url('midnight.jpg')";
+      }
+      
+      // AM/PM format
+      var ampm ;
+      if(hours>=12){
+        ampm = "PM"
+        hours = hours-12;
+      }
+      else{
+        ampm = "AM"
+      }
+      
+      hours = hours ? hours : 12; // if hour = 0, show 12
+
+      // Add leading zeros
+      if (hours<10) {
+        hours = "0"+ hours;
+      }
+      if (minutes<10) {
+        minutes = "0" + minutes;
+      }
+      if (seconds<10) {
+        seconds = "0"+ seconds;
+      }
+
+
+      // Display time
+      document.getElementById('time').innerText =
+        `${hours}:${minutes}:${seconds} ${ampm}`;
+
+      // Display date
+      let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      let dateString = now.toLocaleDateString("en-US", options);
+      document.getElementById('date').innerText = dateString;
+    }
+
+    // Update clock every second
+    setInterval(updateClock, 1000);
+
+    // Run once immediately
+    updateClock();
+  </script>
+</body>
+</html>
